@@ -1,7 +1,7 @@
 {
   "name": "pc3utils",
   "description": "PC3 Utils",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "Petrocloud",
   "private": true,
   "main": "./lib/pc3utils",
