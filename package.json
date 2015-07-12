@@ -1,18 +1,17 @@
 {
   "name": "pc3utils",
   "description": "PC3 Utils",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "Petrocloud",
   "private": true,
   "main": "./lib/pc3utils",
   "dependencies": {
     "q": "~1.0.x",
     "request": "~2.x.x",
-    "lodash": "~2.4.x",
-    "sendgrid": "~1.2.x"
+    "lodash": "~2.4.x"
   },
   "repository": {
-    "type": "mercurial",
-    "url": "ssh://hg@bitbucket.org/petrocloud/pc3utils"
+    "type": "git",
+    "url": "https://github.com/PetroCloud/pc3utils.git"
   }
 }
