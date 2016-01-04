@@ -1,14 +1,14 @@
 {
-  "name": "pc3utils",
-  "description": "PC3 Utils",
-  "version": "1.0.8",
+  "name": "@petrocloud/pcutils",
+  "description": "PetroCloud Utils",
+  "version": "1.0.9",
   "author": "Petrocloud",
   "private": true,
-  "main": "./lib/pc3utils",
+  "main": "./lib/utils",
   "dependencies": {
-    "q": "~1.0.x",
+    "bluebird": "~2.9.x",
     "request": "~2.x.x",
-    "lodash": "~2.4.x"
+    "lodash": "~3.x.x"
   },
   "repository": {
     "type": "git",
