@@ -187,8 +187,7 @@ describe('postJSONObject', function() {
         res.headers.should.have.property('content-type', 'application/json');
         res.should.have.property('body');
         var body = res.body;
-        body.should.have.property('body');
-        body = JSON.parse(body.body);
+        body = JSON.parse(body);
         body.should.have.property('a');
       });
   });
@@ -209,8 +208,7 @@ describe('postJSONObject', function() {
         res.headers.should.have.property('content-type', 'application/json');
         res.should.have.property('body');
         var body = res.body;
-        body.should.have.property('body');
-        body = JSON.parse(body.body);
+        body = JSON.parse(body);
         body.should.have.property('a');
       });
   });
@@ -235,8 +233,7 @@ describe('getJSON', function() {
       return pu.getJSON('http://127.0.0.1:6789/')
         .then(function(res) {
           res.should.have.property('body');
-          res.body.should.have.property('body');
-          res.body.body.should.have.property('a', 'sample');
+          res.body.should.have.property('a', 'sample');
         });
     });
 
@@ -251,8 +248,7 @@ describe('getJSON', function() {
       return pu.getJSON('http://127.0.0.1:6789/', 1500)
         .then(function(res) {
           res.should.have.property('body');
-          res.body.should.have.property('body');
-          res.body.body.should.have.property('a', 'sample');
+          res.body.should.have.property('a', 'sample');
         });
     });
 
