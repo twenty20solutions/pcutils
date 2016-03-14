@@ -4,6 +4,7 @@
 
 [![npm version](https://badge.fury.io/js/pcutils.svg)](https://badge.fury.io/js/pcutils)
 [![npm version](https://david-dm.org/petrocloud/pcutils.svg)](https://david-dm.org/petrocloud/pcutils)
+[![Build Status](https://travis-ci.org/PetroCloud/pcutils.svg?branch=master)](https://travis-ci.org/PetroCloud/pcutils)
 
 ---
 
