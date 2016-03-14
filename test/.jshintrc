@@ -1,0 +1,19 @@
+{
+  "node": true,
+  "strict": false,
+  "globals": {
+    "Node": false,
+    "describe": false,
+    "xdescribe": false,
+    "ddescribe": false,
+    "it": false,
+    "xit": false,
+    "iit": false,
+    "beforeEach": false,
+    "afterEach": false,
+    "expect": false,
+    "pending": false,
+    "should": false,
+    "spyOn": false
+  }
+}
