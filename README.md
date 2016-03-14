@@ -1,5 +1,12 @@
 # PetroCloud Utils (pcutils)
 
+---
+
+[![npm version](https://badge.fury.io/js/pcutils.svg)](https://badge.fury.io/js/pcutils)
+[![npm version](https://david-dm.org/petrocloud/pcutils.svg)](https://david-dm.org/petrocloud/pcutils)
+
+---
+
 Some utility functions we use for several projects
 
 ## Usage
