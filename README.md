@@ -10,6 +10,10 @@
 
 Some utility functions we use for several projects
 
+## Change Log
+
+See the [CHANGELOG.md](CHANGELOG.md) for information on what's new and what changed.
+
 ## Usage
 
 ### `existsIn(source, itemsToMatch)`
