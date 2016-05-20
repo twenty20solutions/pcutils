@@ -14,7 +14,7 @@ Some utility functions we use for several projects
 
 ### `existsIn(source, itemsToMatch)`
 
-Checks if itemsToMatch exists in source 
+Checks if itemsToMatch exists in source
 - `source` Source array
 - `itemsToMatch` items that should exist in the source array
 - returns `boolean`
@@ -25,28 +25,38 @@ Executes an HTTP request.
 - `options` request options. See [`request` options documentation](https://github.com/request/request#requestoptions-callback)
 - returns a Bluebird promise with the `request` response object.
 
-### `postJSONObject(url, objToSend, timeout)`
+### `postJSONObject(url, objToSend, timeout)` aliased to `postJSON`, too.
 
 Sends a JSON object to and endpoint as an HTTP POST
 - `url` URL string of the endpoint
 - `objToSend` object to send
-- `timeout` integer containing the number of milliseconds to 
- wait for a server to send response headers (and start the response body) 
- before aborting the request. Note that if the underlying TCP connection 
- cannot be established, the OS-wide TCP connection timeout will overrule the 
+- `timeout` integer containing the number of milliseconds to
+ wait for a server to send response headers (and start the response body)
+ before aborting the request. Note that if the underlying TCP connection
+ cannot be established, the OS-wide TCP connection timeout will overrule the
  timeout option (the default in Linux can be anywhere from 20-120 seconds).
-- returns a Bluebird promise where the body is the data of the request.
+- `returnBody` boolean that defaults to `true`. Instructs the function to return
+  body if true, or the response object response if false.
+- returns a Bluebird promise where the body is the data of the
+ response if the param returnBody evaluates to true, or the response object
+ itself, if the returnBody parameter evaluates to false (like when not passed
+ at all)
 
 ### `getJSON(url, timeout)`
 
 Get a JSON object from an endpoint as an HTTP GET
 - `url` URL string of the endpoint
-- `timeout` integer containing the number of milliseconds to 
- wait for a server to send response headers (and start the response body) 
- before aborting the request. Note that if the underlying TCP connection 
- cannot be established, the OS-wide TCP connection timeout will overrule the 
+- `timeout` integer containing the number of milliseconds to
+ wait for a server to send response headers (and start the response body)
+ before aborting the request. Note that if the underlying TCP connection
+ cannot be established, the OS-wide TCP connection timeout will overrule the
  timeout option (the default in Linux can be anywhere from 20-120 seconds).
-- returns a Bluebird promise where the body is the data of the request.
+- `returnBody` boolean that defaults to `true`. Instructs the function to return
+  body if true, or the response object response if false.
+- returns a Bluebird promise where the body is the data of the
+ response if the param returnBody evaluates to true, or the response object
+ itself, if the returnBody parameter evaluates to false (like when not passed
+ at all)
 
 ## License
 

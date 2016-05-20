@@ -1,30 +1,29 @@
 var pu = require('../lib/utils');
 var _ = require('lodash');
-var _ = require('lodash');
 var chai = require("chai");
 var should = chai.should();
 var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
-createEchoServer = function(port, delay) {
+createEchoServer = function (port, delay) {
   delay = delay || 0;
   var http = require('http');
-  var s = http.createServer(function(req, resp) {
-    var b = '';
-    req.on('data', function(chunk) {
-      b += chunk;
+  var s = http.createServer(function (req, resp) {
+    var dataToSendBack = '';
+    req.on('data', function (chunk) {
+      dataToSendBack += chunk;
     });
-    req.on('end', function() {
+    req.on('end', function () {
       if (req.method === 'GET') {
-        b = {a: 'sample', object: 'here'};
+        dataToSendBack = {a: 'sample', object: 'here'};
       }
-      _.delay(function() {
+      _.delay(function () {
         resp.writeHead(200, {'content-type': 'application/json'});
         resp.write(JSON.stringify({
           url: req.url,
           method: req.method,
           headers: req.headers,
-          body: b
+          result: dataToSendBack
         }));
         resp.end();
       }, delay);
@@ -36,15 +35,15 @@ createEchoServer = function(port, delay) {
   return s;
 };
 
-describe('existsIn', function() {
-  it('should work with two arrays', function(done) {
+describe('existsIn', function () {
+  it('should work with two arrays', function (done) {
     if (pu.existsIn([1, 2, 3], [1, 2])) {
       done();
     } else {
       done(new Error('Failed'));
     }
   });
-  it('should work with an array and a value', function(done) {
+  it('should work with an array and a value', function (done) {
     if (pu.existsIn([1, 2, 3], 1)) {
       done();
     } else {
@@ -52,7 +51,7 @@ describe('existsIn', function() {
     }
   });
 
-  it('should now work with a non array', function(done) {
+  it('should now work with a non array', function (done) {
     try {
       pu.existsIn(1, 1);
       done(new Error('Should not work!'));
@@ -61,7 +60,7 @@ describe('existsIn', function() {
     }
   });
 
-  it('should not find the element', function(done) {
+  it('should not find the element', function (done) {
     if (pu.existsIn([1, 2, 3], [4])) {
       done(new Error('Should not find it!'));
     } else {
@@ -71,36 +70,34 @@ describe('existsIn', function() {
 
 });
 
-describe('httpRequest', function() {
+describe('httpRequest', function () {
 
   var s = createEchoServer(6789);
   var o = {
     uri: 'http://127.0.0.1:6789'
   };
 
-  before(function(done) {
+  before(function (done) {
     s.listen(s.port, done);
   });
 
-  after(function(done) {
+  after(function (done) {
     s.close(done);
   });
 
-  it('should GET a request', function() {
+  it('should GET a request returning body', function () {
 
     var options = _.clone(o);
     options.returnBody = true;
 
     return pu.httpRequest(options)
-      .then(function(res) {
+      .then(function (res) {
         res = JSON.parse(res);
-        res.should.have.property('body');
-
+        res.should.have.property('result');
       });
   });
 
-
-  it('should GET a request with a header', function() {
+  it('should GET a request with a header', function () {
 
     var options = _.clone(o);
     options.returnBody = true;
@@ -108,147 +105,207 @@ describe('httpRequest', function() {
       'Content-Type': 'application/json'
     };
     return pu.httpRequest(options)
-      .then(function(res) {
+      .then(function (res) {
         res = JSON.parse(res);
-        res.should.have.property('body');
-
+        res.should.have.property('result');
       });
   });
 
-
   it('should GET a request and return a response object instead of body',
-    function() {
+    function () {
 
       var options = _.clone(o);
 
       return pu.httpRequest(options)
-        .then(function(res) {
+        .then(function (res) {
           res.should.have.property('request');
           res.should.have.property('statusCode', 200);
           res.request.should.have.property('href', 'http://127.0.0.1:6789/');
-          var body = JSON.parse(res.body);
-          body.should.have.property('body');
+          res.should.have.property('body');
+          var respObj = JSON.parse(res.body);
+          respObj.should.have.property('result');
+          respObj.result.should.have.property('a');
         });
     });
 
-  it('should POST a request', function() {
+  it('should POST a request', function () {
     var options = _.merge({
       body: 'This is a POST body',
-      method: 'POST'}, o);
+      method: 'POST'
+    }, o);
 
     return pu.httpRequest(options)
-      .then(function(res) {
+      .then(function (res) {
         res.should.have.property('body');
-        var body = JSON.parse(res.body);
-        body.should.have.property('body');
-        body.body.should.equal('This is a POST body');
+        var respObj = JSON.parse(res.body);
+        respObj.should.have.property('result');
+        respObj.result.should.equal('This is a POST body');
       });
   });
 
-  it('should POST a request as JSON', function() {
+  it('should POST a request as JSON', function () {
     var options = _.merge({
       json: true,
       body: {a: 'sample', object: 'here'},
-      method: 'POST'}, o);
+      method: 'POST'
+    }, o);
 
     return pu.httpRequest(options)
-      .then(function(res) {
+      .then(function (res) {
         res.should.have.property('headers');
         res.headers.should.have.property('content-type', 'application/json');
         res.should.have.property('body');
-        var body = res.body;
-        body.should.have.property('body');
-        body = JSON.parse(body.body);
-        body.should.have.property('a');
+        var respObj = res.body;
+        respObj.should.have.property('result');
+        var result = JSON.parse(respObj.result)
+        result.should.have.property('a', 'sample');
+        result.should.have.property('object', 'here');
       });
   });
 
 });
 
 
-describe('postJSONObject', function() {
+describe('postJSONObject', function () {
 
   var s = createEchoServer(6789, 1000);
 
-  before(function(done) {
+  before(function (done) {
     s.listen(s.port, done);
   });
 
-  after(function(done) {
+  after(function (done) {
     s.close(done);
   });
 
-  it('should POST a request as JSON', function() {
+  it('should POST a request as JSON', function () {
 
     return pu.postJSONObject('http://127.0.0.1:6789/',
-    {a: 'sample', object: 'here'})
-      .then(function(res) {
+      {a: 'sample', object: 'here'})
+      .then(function (res) {
         res.should.have.property('headers');
         res.headers.should.have.property('content-type', 'application/json');
+        res.should.have.property('result');
+        var result = JSON.parse(res.result);
+        result.should.have.property('a', 'sample');
+        result.should.have.property('object', 'here');
+      });
+  });
+
+  it('should POST a request as JSON using alias', function () {
+
+    return pu.postJSON('http://127.0.0.1:6789/',
+      {a: 'sample', object: 'here'})
+      .then(function (res) {
+        res.should.have.property('headers');
+        res.headers.should.have.property('content-type', 'application/json');
+        res.should.have.property('result');
+        var result = JSON.parse(res.result);
+        result.should.have.property('a', 'sample');
+        result.should.have.property('object', 'here');
+      });
+  });
+
+  it('should POST a request as JSON but returning a request', function () {
+
+    // last param is returnBody = false
+    return pu.postJSONObject('http://127.0.0.1:6789/',
+      {a: 'sample', object: 'here'}, undefined, false)
+      .then(function (res) {
+        res.should.have.property('request');
+        res.should.have.property('statusCode', 200);
+        res.should.have.property('connection');
+        res.connection.should.have.property('bytesRead');
+        res.connection.should.have.property('bytesWritten');
+        res.request.should.have.property('href', 'http://127.0.0.1:6789/');
         res.should.have.property('body');
-        var body = res.body;
-        body = JSON.parse(body);
-        body.should.have.property('a');
+        res.body.should.have.property('result');
+        var result = JSON.parse(res.body.result);
+        result.should.have.property('a', 'sample');
+        result.should.have.property('object', 'here');
       });
   });
 
   it('should return timeout sending a POST request as JSON with 500ms',
-    function() {
+    function () {
       return pu.postJSONObject('http://127.0.0.1:6789/',
-      {a: 'sample', object: 'here'}, 500)
+        {a: 'sample', object: 'here'}, 500)
         .should.be.rejectedWith(Error);
     });
 
-  it('should POST a request as JSON with a 1500ms timeout', function() {
+  it('should POST a request as JSON with a 1500ms timeout', function () {
 
     return pu.postJSONObject('http://127.0.0.1:6789/',
-    {a: 'sample', object: 'here'}, 1500)
-      .then(function(res) {
+      {a: 'sample', object: 'here'}, 1500)
+      .then(function (res) {
         res.should.have.property('headers');
         res.headers.should.have.property('content-type', 'application/json');
-        res.should.have.property('body');
-        var body = res.body;
-        body = JSON.parse(body);
-        body.should.have.property('a');
+        res.should.have.property('result');
+        var result = JSON.parse(res.result);
+        result.should.have.property('a', 'sample');
+        result.should.have.property('object', 'here');
       });
   });
 
 });
 
 
-describe('getJSON', function() {
+describe('getJSON', function () {
 
   var s = createEchoServer(6789, 1000);
 
-  before(function(done) {
+  before(function (done) {
     s.listen(s.port, done);
   });
 
-  after(function(done) {
+  after(function (done) {
     s.close(done);
   });
 
   it('should GET a response as JSON',
-    function() {
+    function () {
       return pu.getJSON('http://127.0.0.1:6789/')
-        .then(function(res) {
-          res.should.have.property('body');
-          res.body.should.have.property('a', 'sample');
+        .then(function (res) {
+          res.should.have.property('result');
+          var result = res.result;
+          result.should.have.property('a', 'sample');
+          result.should.have.property('object', 'here');
+        });
+    });
+
+  it('should GET a response as JSON, returning a response object',
+    function () {
+      // last param is returnBody = false
+      return pu.getJSON('http://127.0.0.1:6789/', undefined, false)
+        .then(function (resp) {
+          resp.should.have.property('request');
+          resp.should.have.property('statusCode', 200);
+          resp.should.have.property('connection');
+          resp.connection.should.have.property('bytesRead');
+          resp.connection.should.have.property('bytesWritten');
+          resp.request.should.have.property('href', 'http://127.0.0.1:6789/');
+          resp.should.have.property('body');
+          resp.body.should.have.property('result');
+          var result = resp.body.result;
+          result.should.have.property('a', 'sample');
+          result.should.have.property('object', 'here');
         });
     });
 
   it('should return timeout sending a GET request as JSON with 500ms',
-    function() {
+    function () {
       return pu.getJSON('http://127.0.0.1:6789/', 500)
         .should.be.rejectedWith(Error);
     });
 
   it('should GET a request as JSON with a 1500ms timeout',
-    function() {
+    function () {
       return pu.getJSON('http://127.0.0.1:6789/', 1500)
-        .then(function(res) {
-          res.should.have.property('body');
-          res.body.should.have.property('a', 'sample');
+        .then(function (res) {
+          res.should.have.property('result');
+          var result = res.result;
+          result.should.have.property('a', 'sample');
+          result.should.have.property('object', 'here');
         });
     });
 
