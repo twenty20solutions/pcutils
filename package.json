@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "./lib/utils",
   "scripts": {
-    "test": "mocha",
+    "test": "istanbul cover _mocha test/**/*.js",
     "testdev": "mocha --bail"
   },
   "dependencies": {
