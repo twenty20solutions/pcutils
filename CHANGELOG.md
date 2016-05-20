@@ -2,7 +2,8 @@
 
 ## [Unreleased]
 ### Added
-- Updated CHANGELOG.md format to follow the recommendations on [Keep a changelog](https://github.com/olivierlacan/keep-a-changelog/blob/master/CHANGELOG.md)
+- Updated CHANGELOG.md to follow the recommendations on [Keep a changelog](https://github.com/olivierlacan/keep-a-changelog/blob/master/CHANGELOG.md) [@luislobo](https://github.com/luislobo/)
+- Updated README.md [@luislobo](https://github.com/luislobo/)
 
 ## [1.0.16] - 2016-03-16
 ### Added
@@ -30,12 +31,12 @@
 ### Changed
 - Travis config file [@luislobo](https://github.com/luislobo/)
 
-## [v1.0.12] - 2016-03-14
+## [1.0.12] - 2016-03-14
 ### Changed
 - Made getJSON and postJSON return the response body instead of the request object [@luislobo](https://github.com/luislobo/)
 - Updated README.md [@luislobo](https://github.com/luislobo/)
 
-## [v1.0.11] - 2016-03-13
+## [1.0.11] - 2016-03-13
 ---
 - general cleanup [@luislobo](https://github.com/luislobo/)
 - replaced Q with Bluebird [@luislobo](https://github.com/luislobo/)
