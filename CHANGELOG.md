@@ -1,9 +1,8 @@
 # PetroCloud Utils (pcutils) CHANGELOG
 
-## [Unreleased]
+## [1.0.17] - 2016-11-07
 ### Added
-- Updated CHANGELOG.md to follow the recommendations on [Keep a changelog](https://github.com/olivierlacan/keep-a-changelog/blob/master/CHANGELOG.md) [@luislobo]
-- Updated README.md [@luislobo]
+- `promisifier` and `objectToString` functions [@luislobo]
 
 ## [1.0.16] - 2016-03-16
 ### Added
@@ -43,7 +42,8 @@
 - Added unit tests and coverage [@luislobo]
 
 [@luislobo]: https://github.com/luislobo/
-[Unreleased]: https://github.com/PetroCloud/pcutils/compare/v1.0.16...HEAD
+[Unreleased]: https://github.com/PetroCloud/pcutils/compare/v1.0.17...HEAD
+[1.0.17]: https://github.com/PetroCloud/pcutils/compare/v1.0.16...v1.0.17
 [1.0.16]: https://github.com/PetroCloud/pcutils/compare/v1.0.15...v1.0.16
 [1.0.15]: https://github.com/PetroCloud/pcutils/compare/v1.0.14...v1.0.15
 [1.0.14]: https://github.com/PetroCloud/pcutils/compare/v1.0.13...v1.0.14
