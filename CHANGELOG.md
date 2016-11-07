@@ -1,5 +1,9 @@
 # PetroCloud Utils (pcutils) CHANGELOG
 
+## [1.0.20] - 2016-11-07
+### Changed
+- Links to Coveralls badges [@luislobo]
+
 ## [1.0.19] - 2016-11-07
 ### Added
 - Posting code coverage to Coveralls [@luislobo]
@@ -51,7 +55,8 @@
 - Added unit tests and coverage [@luislobo]
 
 [@luislobo]: https://github.com/luislobo/
-[Unreleased]: https://github.com/PetroCloud/pcutils/compare/v1.0.19...HEAD
+[Unreleased]: https://github.com/PetroCloud/pcutils/compare/v1.0.20...HEAD
+[1.0.20]: https://github.com/PetroCloud/pcutils/compare/v1.0.19...v1.0.20
 [1.0.19]: https://github.com/PetroCloud/pcutils/compare/v1.0.18...v1.0.19
 [1.0.18]: https://github.com/PetroCloud/pcutils/compare/v1.0.17...v1.0.18
 [1.0.17]: https://github.com/PetroCloud/pcutils/compare/v1.0.16...v1.0.17
