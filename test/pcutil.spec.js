@@ -310,3 +310,70 @@ describe('getJSON', function () {
     });
 
 });
+
+
+describe('promisifier', function () {
+
+  it('should convert a normal function into a promise and resolve',
+    function () {
+      return pu.promisifier(function () {
+          return 'this function should be promisified';
+        })()
+        .then(function (res) {
+          res.should.equal('this function should be promisified');
+        });
+    });
+
+  it('should convert a normal function into a promise and fail',
+    function () {
+      return pu.promisifier(function () {
+          throw new Error('this function should be promisified');
+        })()
+        .catch(function (err) {
+          err.message.should.equal('this function should be promisified');
+        });
+    });
+
+});
+
+describe('objectToString', function () {
+
+  it('should convert an empty object into a string',
+    function () {
+      var s = pu.objectToString({});
+      s.should.equal('{}');
+    });
+
+  it('should convert an empty array into a string',
+    function () {
+      var s = pu.objectToString([]);
+      s.should.equal('[]');
+    });
+
+  it('should convert a deep object into an (also deep) string',
+    function () {
+      var s = pu.objectToString({a: {b: {c: {d: {e: {f: {g: {h: {i: {j: {k: 1}}}}}}}}}}});
+      s.should.equal('{ a: { b: { c: { d: { e: { f: { g: { h: { i: { j: { k: 1 } } } } } } } } } } }');
+    });
+
+  it('should convert a deep object into an (also deep) string, showing hidden attributes',
+    function () {
+      var obj = {a: {b: {c: {d: {e: {f: {g: {h: {i: {j: {k: 1}}}}}}}}}}};
+      Object.defineProperty(obj, 'seeMeNoMore', {
+        enumerable: false,
+        writable: true,
+        value: 'youAreRight'
+      });
+
+      var s = pu.objectToString(obj, true);
+      s.should.have.string('seeMeNoMore');
+    });
+
+  it('should convert a deep object into a string ony 3 levels deep',
+    function () {
+      var s = pu.objectToString({a: {b: {c: {d: {e: {f: {g: {h: {i: {j: {k: 1}}}}}}}}}}}, false, 3);
+      s.should.equal('{ a: { b: { c: { d: [Object] } } } }');
+    });
+
+});
+
