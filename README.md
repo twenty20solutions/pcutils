@@ -62,6 +62,24 @@ Get a JSON object from an endpoint as an HTTP GET
  itself, if the returnBody parameter evaluates to false (like when not passed
  at all)
 
+### `promisifier(function)`
+
+Takes a function as a parameter and returns a promise that resolves when the
+function returns a value or rejects if an exception ocurrs
+- `function` is the function to promisify
+- returns a Bluebird promise with the result of the call to the function or an
+error if one is thrown
+
+### `objectToString(object, showHidden, depth)`
+
+Takes an object or an array and returns the 'deep' representation of it.
+
+- `object` is the object subject to be converted
+- `showHidden` (defaults to false) makes the function show hidden attributes
+- `depth` (defaults to null, that is, infinite depth) tells how deep to go in
+the nesting chain, when converting the object as a string.
+- returns a String that resembles the object, based on the parameters passed
+
 ## License
 
 **[MIT](./LICENSE)**
