@@ -5,7 +5,7 @@
 [![npm version](https://badge.fury.io/js/pcutils.svg)](https://badge.fury.io/js/pcutils)
 [![npm version](https://david-dm.org/petrocloud/pcutils.svg)](https://david-dm.org/petrocloud/pcutils)
 [![Build Status](https://travis-ci.org/PetroCloud/pcutils.svg?branch=master)](https://travis-ci.org/PetroCloud/pcutils)
-[![Coverage Status](https://coveralls.io/repos/petrocloud/pcutils/badge.svg?branch=master)](https://coveralls.io/github/PetroCloud/pcutils)
+[![Coverage Status](https://coveralls.io/repos/github/PetroCloud/pcutils/badge.svg)](https://coveralls.io/github/PetroCloud/pcutils)
 
 ---
 
