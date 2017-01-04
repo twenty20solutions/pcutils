@@ -1,5 +1,10 @@
 # PetroCloud Utils (pcutils) CHANGELOG
 
+## [1.0.21] - 2017-01-04
+### Changed
+- `getJSON`, `POSTJSON` and `httpRequest` now rejects when it gets a statusCode 
+ between 400 and 599 [@luislobo]
+
 ## [1.0.20] - 2016-11-07
 ### Changed
 - Links to Coveralls badges [@luislobo]
@@ -55,7 +60,8 @@
 - Added unit tests and coverage [@luislobo]
 
 [@luislobo]: https://github.com/luislobo/
-[Unreleased]: https://github.com/PetroCloud/pcutils/compare/v1.0.20...HEAD
+[Unreleased]: https://github.com/PetroCloud/pcutils/compare/v1.0.21...HEAD
+[1.0.21]: https://github.com/PetroCloud/pcutils/compare/v1.0.20...v1.0.21
 [1.0.20]: https://github.com/PetroCloud/pcutils/compare/v1.0.19...v1.0.20
 [1.0.19]: https://github.com/PetroCloud/pcutils/compare/v1.0.18...v1.0.19
 [1.0.18]: https://github.com/PetroCloud/pcutils/compare/v1.0.17...v1.0.18

@@ -28,9 +28,17 @@ Checks if itemsToMatch exists in source
 
 Executes an HTTP request.
 - `options` request options. See [`request` options documentation](https://github.com/request/request#requestoptions-callback)
-- returns a Bluebird promise with the `request` response object.
+- returns a Bluebird promise that is resolved with the `request` response 
+object, unless `options.returnBody` is set to `true`, in that case, it resolves
+the promise with the body content.
 
-### `postJSONObject(url, objToSend, timeout)` aliased to `postJSON`, too.
+In the case where the request returns an HTTP error (anything from 400 to 599 
+HTTP status code), it will reject the promise with an error object with 
+`err.message` = `IncomingMessage.statusMessage` as it's message, and 
+`err.statusCode` = `IncomingMessage.statusCode`. If `options.returnBody` is set 
+to `false`, the `err` object returned is augmented with the response object.
+
+### `postJSONObject(url, objToSend, timeout, returnBody=true)` aliased to `postJSON`, too.
 
 Sends a JSON object to and endpoint as an HTTP POST
 - `url` URL string of the endpoint
@@ -42,10 +50,16 @@ Sends a JSON object to and endpoint as an HTTP POST
  timeout option (the default in Linux can be anywhere from 20-120 seconds).
 - `returnBody` boolean that defaults to `true`. Instructs the function to return
   body if true, or the response object response if false.
-- returns a Bluebird promise where the body is the data of the
- response if the param returnBody evaluates to true, or the response object
- itself, if the returnBody parameter evaluates to false (like when not passed
- at all)
+- returns a Bluebird promise that is resolved with the `request` response 
+body, unless `returnBody` is set to `false`, in that case, it resolves
+the promise with the response object.
+
+In the case where the request returns an HTTP error (anything from 400 to 599 
+HTTP status code), it will reject the promise with an error object with 
+`err.message` = `IncomingMessage.statusMessage` as it's message, and 
+`err.statusCode` = `IncomingMessage.statusCode`.
+If `returnBody` is set to `false`, the `err` object returned is augmented with 
+the response object.
 
 ### `getJSON(url, timeout)`
 
@@ -58,10 +72,16 @@ Get a JSON object from an endpoint as an HTTP GET
  timeout option (the default in Linux can be anywhere from 20-120 seconds).
 - `returnBody` boolean that defaults to `true`. Instructs the function to return
   body if true, or the response object response if false.
-- returns a Bluebird promise where the body is the data of the
- response if the param returnBody evaluates to true, or the response object
- itself, if the returnBody parameter evaluates to false (like when not passed
- at all)
+- returns a Bluebird promise that is resolved with the `request` response 
+body, unless `returnBody` is set to `false`, in that case, it resolves
+the promise with the response object.
+
+In the case where the request returns an HTTP error (anything from 400 to 599 
+HTTP status code), it will reject the promise with an error object with 
+`err.message` = `IncomingMessage.statusMessage` as it's message, and 
+`err.statusCode` = `IncomingMessage.statusCode`.
+If `returnBody` is set to `false`, the `err` object returned is augmented with 
+the response object.
 
 ### `promisifier(function)`
 

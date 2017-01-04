@@ -8,7 +8,11 @@ chai.use(chaiAsPromised);
 createEchoServer = function (port, delay) {
   delay = delay || 0;
   var http = require('http');
+  var url = require("url");
   var s = http.createServer(function (req, resp) {
+    var parsedUrl = url.parse(req.url, true); // true to get query as object
+    var queryAsObject = parsedUrl.query;
+
     var dataToSendBack = '';
     req.on('data', function (chunk) {
       dataToSendBack += chunk;
@@ -18,14 +22,20 @@ createEchoServer = function (port, delay) {
         dataToSendBack = {a: 'sample', object: 'here'};
       }
       _.delay(function () {
-        resp.writeHead(200, {'content-type': 'application/json'});
-        resp.write(JSON.stringify({
-          url: req.url,
-          method: req.method,
-          headers: req.headers,
-          result: dataToSendBack
-        }));
-        resp.end();
+        if (queryAsObject.reject) {
+          resp.statusCode = 500;
+          resp.write('Server error');
+          resp.end();
+        } else {
+          resp.writeHead(200, {'content-type': 'application/json'});
+          resp.write(JSON.stringify({
+            url: req.url,
+            method: req.method,
+            headers: req.headers,
+            result: dataToSendBack
+          }));
+          resp.end();
+        }
       }, delay);
     });
   });
@@ -84,6 +94,42 @@ describe('httpRequest', function () {
   after(function (done) {
     s.close(done);
   });
+
+  it('should throw a reject when the server is not available',
+    function () {
+      return pu.httpRequest({
+        uri: 'http://127.0.0.1:1234/',
+        returnBody: true
+      }).should.be
+        .rejectedWith(Error);
+    });
+
+  it('should throw a reject when the server is not available even if returnBody is false',
+    function () {
+      return pu.httpRequest({
+        uri: 'http://127.0.0.1:1234/',
+        returnBody: false
+      }).should.be
+        .rejectedWith(Error);
+    });
+
+  it('should throw a reject when the server returns an error',
+    function () {
+      return pu.httpRequest({
+        uri: 'http://127.0.0.1:6789/?reject=1',
+        returnBody: true
+      }).should.be
+        .rejectedWith(Error);
+    });
+
+  it('should throw a reject when the server returns an error even if returnBody is false',
+    function () {
+      return pu.httpRequest({
+        uri: 'http://127.0.0.1:6789/?reject=1',
+        returnBody: false
+      }).should.be
+        .rejectedWith(Error);
+    });
 
   it('should GET a request returning body', function () {
 
@@ -178,6 +224,18 @@ describe('postJSONObject', function () {
     s.close(done);
   });
 
+  it('should throw a reject when the server is not available',
+    function () {
+      return pu.postJSONObject('http://127.0.0.1:1234/').should.be
+        .rejectedWith(Error);
+    });
+
+  it('should throw a reject when the server returns an error',
+    function () {
+      return pu.postJSONObject('http://127.0.0.1:6789/?reject=1').should.be
+        .rejectedWith(Error);
+    });
+
   it('should POST a request as JSON', function () {
 
     return pu.postJSONObject('http://127.0.0.1:6789/',
@@ -261,6 +319,17 @@ describe('getJSON', function () {
   after(function (done) {
     s.close(done);
   });
+
+  it('should throw a reject when the server is not available',
+    function () {
+      return pu.getJSON('http://127.0.0.1:1234/').should.be.rejectedWith(Error);
+    });
+
+  it('should throw a reject when the server returns an error',
+    function () {
+      return pu.getJSON('http://127.0.0.1:6789/?reject=1').should.be
+        .rejectedWith(Error);
+    });
 
   it('should GET a response as JSON',
     function () {
