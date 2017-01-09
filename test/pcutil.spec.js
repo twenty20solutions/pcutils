@@ -236,6 +236,7 @@ describe('postJSONObject', function () {
         .rejectedWith(Error);
     });
 
+
   it('should POST a request as JSON', function () {
 
     return pu.postJSONObject('http://127.0.0.1:6789/',
@@ -328,6 +329,12 @@ describe('getJSON', function () {
   it('should throw a reject when the server returns an error',
     function () {
       return pu.getJSON('http://127.0.0.1:6789/?reject=1').should.be
+        .rejectedWith(Error);
+    });
+
+  it('should throw a reject when the port is > 65535',
+    function () {
+      return pu.getJSON('http://127.0.0.1:66666').should.be
         .rejectedWith(Error);
     });
 
