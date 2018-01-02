@@ -1,23 +1,18 @@
-/*global module:false*/
-module.exports = function(grunt) {
+/* global module:false */
+module.exports = function (grunt) {
 
   // Project configuration.
   grunt.initConfig({
     // Task configuration.
-    jshint: {
-      // http://jshint.com/docs/options
+    eslint: {
       options: {
-        "jshintrc": true,
-        force: false
+        format: 'codeframe',
+        fix: true
       },
       gruntfile: {
-        jshintrc: true,
         src: 'Gruntfile.js'
       },
       lib_test: {
-        options: {
-          jshintrc: true
-        },
         src: ['lib/*.js', 'test/*.spec.js']
       }
     },
@@ -42,15 +37,15 @@ module.exports = function(grunt) {
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
-        tasks: ['jshint:gruntfile']
+        tasks: ['eslint:gruntfile']
       },
       lib_test: {
         files: '<%= jshint.lib_test.src %>',
-        tasks: ['jshint:lib_test', 'mochaTest']
+        tasks: ['eslint:lib_test', 'mochaTest']
       },
       default: {
         files: 'lib/*.js',
-        tasks: ['jshint']
+        tasks: ['eslint']
       }
     }
   });
@@ -58,15 +53,15 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-mocha-istanbul');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('gruntify-eslint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-coveralls');
 
-  //testing
+  // testing
   grunt.registerTask('test', ['mochaTest']);
   grunt.registerTask('coverage', ['mocha_istanbul:coverage']);
   // Default task.
-  grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask('default', ['eslint', 'test']);
 
 
 };

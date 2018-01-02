@@ -1,7 +1,7 @@
 {
   "name": "pcutils",
   "description": "PetroCloud Utils",
-  "version": "1.0.22",
+  "version": "1.99.99",
   "author": "Petrocloud",
   "license": "MIT",
   "main": "./lib/utils",
@@ -9,23 +9,27 @@
     "test": "istanbul cover _mocha test/**/*.js",
     "testdev": "mocha --bail"
   },
+  "engines": {
+    "node": ">=8"
+  },
   "dependencies": {
-    "bluebird": "3.4.6",
-    "lodash": "4.16.6",
-    "request": "2.78.0"
+    "bluebird": "3.5.1",
+    "lodash": "4.17.4",
+    "request": "2.83.0"
   },
   "devDependencies": {
-    "chai": "3.5.0",
-    "chai-as-promised": "^6.0.0",
+    "chai": "4.1.2",
+    "chai-as-promised": "7.1.1",
+    "eslint": "4.14.0",
+    "eslint-plugin-chai-friendly": "^0.4.1",
     "grunt": "1.0.1",
-    "grunt-contrib-jshint": "1.0.0",
     "grunt-contrib-watch": "1.0.0",
-    "grunt-coveralls": "^1.0.1",
+    "grunt-coveralls": "1.0.1",
     "grunt-mocha-istanbul": "5.0.2",
-    "grunt-mocha-test": "0.13.2",
-    "istanbul": "0.4.5",
-    "jshint-stylish": "2.2.1",
-    "mocha": "3.1.2"
+    "grunt-mocha-test": "0.13.3",
+    "gruntify-eslint": "4.0.0",
+    "istanbul": "1.1.0-alpha.1",
+    "mocha": "4.1.0"
   },
   "directories": {
     "test": "test"

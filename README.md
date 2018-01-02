@@ -16,14 +16,7 @@ See the [CHANGELOG.md](CHANGELOG.md) for information on what's new and what chan
 
 ## Usage
 
-### `existsIn(source, itemsToMatch)`
-
-Checks if itemsToMatch exists in source
-- `source` Source array
-- `itemsToMatch` items that should exist in the source array
-- returns `boolean`
-
-### `httpRequest(options)`
+### Function `httpRequest(options)`
 
 Executes an HTTP request.
 - `options` request options. See [`request` options documentation](https://github.com/request/request#requestoptions-callback)
@@ -37,7 +30,8 @@ HTTP status code), it will reject the promise with an error object with
 `err.statusCode` = `IncomingMessage.statusCode`. If `options.returnBody` is set 
 to `false`, the `err` object returned is augmented with the response object.
 
-### `postJSONObject(url, objToSend, timeout, returnBody=true)` aliased to `postJSON`, too.
+### Function `postJSONObject(url, objToSend, timeout, returnBody=true)` 
+#### Aliased to `postJSON`, too.
 
 Sends a JSON object to and endpoint as an HTTP POST
 - `url` URL string of the endpoint
@@ -60,7 +54,7 @@ HTTP status code), it will reject the promise with an error object with
 If `returnBody` is set to `false`, the `err` object returned is augmented with 
 the response object.
 
-### `getJSON(url, timeout)`
+### Function `getJSON(url, timeout)`
 
 Get a JSON object from an endpoint as an HTTP GET
 - `url` URL string of the endpoint

@@ -1,5 +1,14 @@
 # PetroCloud Utils (pcutils) CHANGELOG
 
+## [Unreleased] yet
+
+## [2.0.0] - 2018-01-01
+### Changed
+- Removes all unused functions `existsIn`, `promisifier`, `objectToString` [@luislobo]
+- Updated dependencies [@luislobo]
+- Supports async/await. From now on, only compatible with Node 8+ [@luislobo]
+- Replaced jshint by eslint [@luislobo]
+
 ## [1.0.21] - 2017-01-04
 ### Changed
 - `getJSON`, `POSTJSON` and `httpRequest` now rejects when it gets a statusCode 
@@ -60,7 +69,8 @@
 - Added unit tests and coverage [@luislobo]
 
 [@luislobo]: https://github.com/luislobo/
-[Unreleased]: https://github.com/PetroCloud/pcutils/compare/v1.0.21...HEAD
+[Unreleased]: https://github.com/PetroCloud/pcutils/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/PetroCloud/pcutils/compare/v1.0.21...v2.0.0
 [1.0.21]: https://github.com/PetroCloud/pcutils/compare/v1.0.20...v1.0.21
 [1.0.20]: https://github.com/PetroCloud/pcutils/compare/v1.0.19...v1.0.20
 [1.0.19]: https://github.com/PetroCloud/pcutils/compare/v1.0.18...v1.0.19
