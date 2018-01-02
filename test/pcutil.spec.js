@@ -184,6 +184,21 @@ describe('postJSONObject', () =>{
       result.should.have.property('is', 'here');
     }));
 
+  it('should POST a request as JSON and return as Body for wrong returnBody param', () =>
+    pu.postJSONObject('http://127.0.0.1:6789/',
+      {
+        some: 'sample',
+        is: 'here'
+      },null, 1) // <= this should be boolean but as a safeguard, it returns Body when it's not boolean
+      .then((res) =>{
+        res.should.have.property('headers');
+        res.headers.should.have.property('content-type', 'application/json');
+        res.should.have.property('result');
+        const result = JSON.parse(res.result);
+        result.should.have.property('some', 'sample');
+        result.should.have.property('is', 'here');
+      }));
+
   it('should POST a request as JSON using alias', () =>
     pu.postJSON('http://127.0.0.1:6789/',
       {
@@ -270,6 +285,15 @@ describe('getJSON', () =>{
 
   it('should GET a response as JSON',
     () => pu.getJSON('http://127.0.0.1:6789/')
+      .then((res) =>{
+        res.should.have.property('result');
+        const result = res.result;
+        result.should.have.property('some', 'sample');
+        result.should.have.property('is', 'here');
+      }));
+
+  it('should GET a response as JSON and return as Body for wrong returnBody param',
+    () => pu.getJSON('http://127.0.0.1:6789/', null, 1) // <== 1 should be a boolean
       .then((res) =>{
         res.should.have.property('result');
         const result = res.result;
