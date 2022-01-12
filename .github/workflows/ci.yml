@@ -1,0 +1,64 @@
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: CI
+env:
+  NODE_ENV: test-ci
+
+on:
+  push:
+    branches: [ master, development ]
+  pull_request:
+    branches: [ master, development ]
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+    #runs-on: ubuntu-18.04
+    container:
+      image: binury/api-pipeline-image
+
+    strategy:
+      matrix:
+        node-version: [
+        12.x
+        ]
+
+    steps:
+
+    - name: Checkout repository ✨
+      uses: actions/checkout@v2
+
+    - name: Set up node env (1/2) 📦
+      uses: actions/setup-node@v2
+      with:
+        check-latest: true
+        node-version: ${{ matrix.node-version }}
+        registry-url: https://registry.npmjs.org
+
+    - name: Set up node env (2/2) 📦
+      id: node
+      run: echo "::set-output name=VERSION::$(node -p process.versions.modules)"
+
+    - name: Cache dependencies 💾
+      id: cache
+      uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: modules-${{ steps.node.outputs.VERSION }}-${{ hashFiles('package-lock.json') }}
+
+    - name: Dependencies 🚀
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: |
+        echo "//registry.npmjs.org/:_authToken=${AUTH_TOKEN}" >> .npmrc
+        npm i -g -q npm@8.x
+        npm ci --prefer-offline --quiet
+      env:
+        AUTH_TOKEN: ${{ secrets.NPM_KEY }}
+
+    - name: Linting 👀
+      run: npm run lint
+
+    - name: Tests 🏃‍♀️
+      run: |
+        npm test
