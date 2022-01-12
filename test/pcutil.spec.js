@@ -7,30 +7,30 @@ chai.use(chaiAsPromised);
 const http = require('http');
 const url = require('url');
 
-function createEchoServer(port, delay){
+function createEchoServer(port, delay) {
   delay = delay || 0;
-  const server = http.createServer((req, resp) =>{
+  const server = http.createServer((req, resp) => {
     const parsedUrl = url.parse(req.url, true); // true to get query as object
     const queryAsObject = parsedUrl.query;
 
     let dataToSendBack = '';
-    req.on('data', (chunk) =>{
+    req.on('data', (chunk) => {
       dataToSendBack += chunk;
     });
-    req.on('end', () =>{
+    req.on('end', () => {
       if (req.method === 'GET') {
         dataToSendBack = {
           some: 'sample',
           is: 'here'
         };
       }
-      _.delay(() =>{
+      _.delay(() => {
         if (queryAsObject.reject) {
           resp.statusCode = 500;
           resp.write('Server error');
           resp.end();
         } else {
-          resp.writeHead(200, {'content-type': 'application/json'});
+          resp.writeHead(200, { 'content-type': 'application/json' });
           resp.write(JSON.stringify({
             url: req.url,
             method: req.method,
@@ -48,18 +48,18 @@ function createEchoServer(port, delay){
   return server;
 }
 
-describe('httpRequest', () =>{
+describe('httpRequest', () => {
 
   const server = createEchoServer(6789);
   const options = {
     uri: 'http://127.0.0.1:6789'
   };
 
-  before((done) =>{
+  before((done) => {
     server.listen(server.port, done);
   });
 
-  after((done) =>{
+  after((done) => {
     server.close(done);
   });
 
@@ -90,7 +90,7 @@ describe('httpRequest', () =>{
   it('should GET a request returning body', () => pu.httpRequest(_.merge({
     returnBody: true
   }, options))
-    .then((res) =>{
+    .then((res) => {
       res = JSON.parse(res);
       res.should.have.property('result');
     }));
@@ -101,14 +101,14 @@ describe('httpRequest', () =>{
       'Content-Type': 'application/json'
     }
   }, options))
-    .then((res) =>{
+    .then((res) => {
       res = JSON.parse(res);
       res.should.have.property('result');
     }));
 
   it('should GET a request and return a response object instead of body',
     () => pu.httpRequest(options)
-      .then((res) =>{
+      .then((res) => {
         res.should.have.property('request');
         res.should.have.property('statusCode', 200);
         res.request.should.have.property('href', 'http://127.0.0.1:6789/');
@@ -122,7 +122,7 @@ describe('httpRequest', () =>{
     body: 'This is a POST body',
     method: 'POST'
   }, options))
-    .then((res) =>{
+    .then((res) => {
       res.should.have.property('body');
       const respObj = JSON.parse(res.body);
       respObj.should.have.property('result');
@@ -137,7 +137,7 @@ describe('httpRequest', () =>{
     },
     method: 'POST'
   }, options))
-    .then((res) =>{
+    .then((res) => {
       res.should.have.property('headers');
       res.headers.should.have.property('content-type', 'application/json');
       res.should.have.property('body');
@@ -151,15 +151,15 @@ describe('httpRequest', () =>{
 });
 
 
-describe('postJSONObject', () =>{
+describe('postJSONObject', () => {
 
   const server = createEchoServer(6789, 100);
 
-  before((done) =>{
+  before((done) => {
     server.listen(server.port, done);
   });
 
-  after((done) =>{
+  after((done) => {
     server.close(done);
   });
 
@@ -175,7 +175,7 @@ describe('postJSONObject', () =>{
       some: 'sample',
       is: 'here'
     })
-    .then((res) =>{
+    .then((res) => {
       res.should.have.property('headers');
       res.headers.should.have.property('content-type', 'application/json');
       res.should.have.property('result');
@@ -189,8 +189,8 @@ describe('postJSONObject', () =>{
       {
         some: 'sample',
         is: 'here'
-      },null, 1) // <= this should be boolean but as a safeguard, it returns Body when it's not boolean
-      .then((res) =>{
+      }, null, 1) // <= this should be boolean but as a safeguard, it returns Body when it's not boolean
+      .then((res) => {
         res.should.have.property('headers');
         res.headers.should.have.property('content-type', 'application/json');
         res.should.have.property('result');
@@ -205,7 +205,7 @@ describe('postJSONObject', () =>{
         some: 'sample',
         is: 'here'
       })
-      .then((res) =>{
+      .then((res) => {
         res.should.have.property('headers');
         res.headers.should.have.property('content-type', 'application/json');
         res.should.have.property('result');
@@ -222,7 +222,7 @@ describe('postJSONObject', () =>{
         some: 'sample',
         is: 'here'
       }, null, false)
-      .then((res) =>{
+      .then((res) => {
         res.should.have.property('request');
         res.should.have.property('statusCode', 200);
         res.should.have.property('connection');
@@ -250,7 +250,7 @@ describe('postJSONObject', () =>{
       some: 'sample',
       is: 'here'
     }, 150)
-    .then((res) =>{
+    .then((res) => {
       res.should.have.property('headers');
       res.headers.should.have.property('content-type', 'application/json');
       res.should.have.property('result');
@@ -262,15 +262,15 @@ describe('postJSONObject', () =>{
 });
 
 
-describe('getJSON', () =>{
+describe('getJSON', () => {
 
   const server = createEchoServer(6789, 100);
 
-  before((done) =>{
+  before((done) => {
     server.listen(server.port, done);
   });
 
-  after((done) =>{
+  after((done) => {
     server.close(done);
   });
 
@@ -285,7 +285,7 @@ describe('getJSON', () =>{
 
   it('should GET a response as JSON',
     () => pu.getJSON('http://127.0.0.1:6789/')
-      .then((res) =>{
+      .then((res) => {
         res.should.have.property('result');
         const result = res.result;
         result.should.have.property('some', 'sample');
@@ -294,7 +294,7 @@ describe('getJSON', () =>{
 
   it('should GET a response as JSON and return as Body for wrong returnBody param',
     () => pu.getJSON('http://127.0.0.1:6789/', null, 1) // <== 1 should be a boolean
-      .then((res) =>{
+      .then((res) => {
         res.should.have.property('result');
         const result = res.result;
         result.should.have.property('some', 'sample');
@@ -305,7 +305,7 @@ describe('getJSON', () =>{
     () =>
       // last param is returnBody = false
       pu.getJSON('http://127.0.0.1:6789/', null, false)
-        .then((resp) =>{
+        .then((resp) => {
           resp.should.have.property('request');
           resp.should.have.property('statusCode', 200);
           resp.should.have.property('connection');
@@ -325,7 +325,7 @@ describe('getJSON', () =>{
 
   it('should GET a request as JSON with a 150ms timeout',
     () => pu.getJSON('http://127.0.0.1:6789/', 150)
-      .then((res) =>{
+      .then((res) => {
         res.should.have.property('result');
         const result = res.result;
         result.should.have.property('some', 'sample');
