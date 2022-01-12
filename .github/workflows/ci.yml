@@ -13,8 +13,7 @@ on:
 jobs:
   build:
 
-    runs-on: self-hosted
-    #runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     container:
       image: binury/api-pipeline-image
 
