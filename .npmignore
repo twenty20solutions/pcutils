@@ -1,0 +1,4 @@
+.*
+*.MD
+test/*
+coverage/*
