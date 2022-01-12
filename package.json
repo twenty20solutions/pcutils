@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "./lib/utils",
   "scripts": {
-    "test": "istanbul cover _mocha test/**/*.js",
+    "test": "nyc --reporter=lcov npm run testdev",
     "lint": "eslint --format codeframe '**/*.js'",
     "testdev": "mocha --bail"
   },
@@ -21,16 +21,10 @@
     "chai": "4.3.4",
     "chai-as-promised": "7.1.1",
     "eslint": "8.6.0",
-    "eslint-formatter-codeframe": "^7.32.1",
+    "eslint-formatter-codeframe": "7.32.1",
     "eslint-plugin-chai-friendly": "0.7.2",
-    "grunt": "1.4.1",
-    "grunt-contrib-watch": "1.1.0",
-    "grunt-coveralls": "2.0.0",
-    "grunt-mocha-istanbul": "5.0.2",
-    "grunt-mocha-test": "0.13.3",
-    "gruntify-eslint": "^4.0.0",
-    "istanbul": "1.1.0-alpha.1",
-    "mocha": "9.1.3"
+    "mocha": "9.1.3",
+    "nyc": "15.1.0"
   },
   "directories": {
     "test": "test"
