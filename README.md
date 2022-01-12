@@ -1,10 +1,9 @@
-# PetroCloud Utils (pcutils)
+# Twenty20 Solutions Utils (pcutils)
 
 ---
 
 [![npm version](https://badge.fury.io/js/pcutils.svg)](https://badge.fury.io/js/pcutils)
-[![Build Status](https://travis-ci.org/PetroCloud/pcutils.svg?branch=master)](https://travis-ci.org/PetroCloud/pcutils)
-[![Coverage Status](https://coveralls.io/repos/github/PetroCloud/pcutils/badge.svg)](https://coveralls.io/github/PetroCloud/pcutils)
+[![Build Status](https://github.com/twenty20solutions/pcutils/actions/workflows/ci.yml/badge.svg)](https://github.com/twenty20solutions/pcutils/actions/workflows/ci.yml)
 
 ---
 
@@ -20,7 +19,7 @@ See the [CHANGELOG.md](CHANGELOG.md) for information on what's new and what chan
 
 Executes an HTTP request.
 - `options` request options. See [`request` options documentation](https://github.com/request/request#requestoptions-callback)
-- returns a Bluebird promise that is resolved with the `request` response 
+- returns a promise that is resolved with the `request` response 
 object, unless `options.returnBody` is set to `true`, in that case, it resolves
 the promise with the body content.
 
@@ -43,7 +42,7 @@ Sends a JSON object to and endpoint as an HTTP POST
  timeout option (the default in Linux can be anywhere from 20-120 seconds).
 - `returnBody` boolean that defaults to `true`. Instructs the function to return
   body if true, or the response object response if false.
-- returns a Bluebird promise that is resolved with the `request` response 
+- returns a promise that is resolved with the `request` response 
 body, unless `returnBody` is set to `false`, in that case, it resolves
 the promise with the response object.
 
@@ -54,7 +53,7 @@ HTTP status code), it will reject the promise with an error object with
 If `returnBody` is set to `false`, the `err` object returned is augmented with 
 the response object.
 
-### Function `getJSON(url, timeout)`
+### Function `getJSON(url, timeout, returnBody = true)`
 
 Get a JSON object from an endpoint as an HTTP GET
 - `url` URL string of the endpoint
@@ -65,7 +64,7 @@ Get a JSON object from an endpoint as an HTTP GET
  timeout option (the default in Linux can be anywhere from 20-120 seconds).
 - `returnBody` boolean that defaults to `true`. Instructs the function to return
   body if true, or the response object response if false.
-- returns a Bluebird promise that is resolved with the `request` response 
+- returns a promise that is resolved with the `request` response 
 body, unless `returnBody` is set to `false`, in that case, it resolves
 the promise with the response object.
 
@@ -76,28 +75,10 @@ HTTP status code), it will reject the promise with an error object with
 If `returnBody` is set to `false`, the `err` object returned is augmented with 
 the response object.
 
-### `promisifier(function)`
-
-Takes a function as a parameter and returns a promise that resolves when the
-function returns a value or rejects if an exception ocurrs
-- `function` is the function to promisify
-- returns a Bluebird promise with the result of the call to the function or an
-error if one is thrown
-
-### `objectToString(object, showHidden, depth)`
-
-Takes an object or an array and returns the 'deep' representation of it.
-
-- `object` is the object subject to be converted
-- `showHidden` (defaults to false) makes the function show hidden attributes
-- `depth` (defaults to null, that is, infinite depth) tells how deep to go in
-the nesting chain, when converting the object as a string.
-- returns a String that resembles the object, based on the parameters passed
-
 ## License
 
 **[MIT](./LICENSE)**
-&copy; 2014-2016
-[Petrocloud](http://petrocloud.com)
+&copy; 2014-2022
+[Twenty20 Solutions](http://www.twenty20solutions.com)
 
 This module is free and open-source under the MIT License.
