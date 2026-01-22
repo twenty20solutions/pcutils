@@ -15,7 +15,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: binury/api-pipeline-image
+      image: 052662386508.dkr.ecr.us-east-1.amazonaws.com/t20/api/ci-container:latest
 
     strategy:
       matrix:
