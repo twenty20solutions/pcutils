@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "./lib/utils",
   "scripts": {
-    "test": "nyc --reporter=lcov npm run testdev",
+    "test": "npx nyc --reporter=lcov npm run testdev",
     "lint": "eslint --format codeframe '**/*.js'",
     "testdev": "mocha --bail"
   },
@@ -18,13 +18,13 @@
     "request": "2.88.2"
   },
   "devDependencies": {
-    "chai": "4.3.4",
-    "chai-as-promised": "7.1.1",
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
     "eslint": "8.6.0",
     "eslint-formatter-codeframe": "7.32.1",
     "eslint-plugin-chai-friendly": "0.7.2",
     "mocha": "^9.2.2",
-    "nyc": "15.1.0"
+    "nyc": "^15.1.0"
   },
   "directories": {
     "test": "test"
