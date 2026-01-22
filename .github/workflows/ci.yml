@@ -20,16 +20,16 @@ jobs:
     strategy:
       matrix:
         node-version: [
-        12.x
+        20.x
         ]
 
     steps:
 
     - name: Checkout repository ✨
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up node env (1/2) 📦
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         check-latest: true
         node-version: ${{ matrix.node-version }}
@@ -37,11 +37,11 @@ jobs:
 
     - name: Set up node env (2/2) 📦
       id: node
-      run: echo "::set-output name=VERSION::$(node -p process.versions.modules)"
+      run: echo "VERSION=$(node -p process.versions.modules)" >> "$GITHUB_OUTPUT"
 
     - name: Cache dependencies 💾
       id: cache
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: node_modules
         key: modules-${{ steps.node.outputs.VERSION }}-${{ hashFiles('package-lock.json') }}
@@ -50,7 +50,6 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         echo "//registry.npmjs.org/:_authToken=${AUTH_TOKEN}" >> .npmrc
-        npm i -g -q npm@8.x
         npm ci --prefer-offline --quiet
       env:
         AUTH_TOKEN: ${{ secrets.NPM_KEY }}
