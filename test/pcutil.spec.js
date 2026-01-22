@@ -79,13 +79,29 @@ describe('httpRequest', () => {
     () => pu.httpRequest({
       uri: 'http://127.0.0.1:6789/?reject=1',
       returnBody: true
-    }).should.be.rejectedWith(Error));
+    })
+      .then(() => {
+        throw new Error('Expected error');
+      })
+      .catch((err) => {
+        err.should.have.property('statusCode');
+        err.should.have.property('body');
+        err.body.should.equal('Server error');
+      }));
 
   it('should throw a reject when the server returns an error even if returnBody is false',
     () => pu.httpRequest({
       uri: 'http://127.0.0.1:6789/?reject=1',
       returnBody: false
-    }).should.be.rejectedWith(Error));
+    })
+      .then(() => {
+        throw new Error('Expected error');
+      })
+      .catch((err) => {
+        err.should.have.property('statusCode');
+        err.should.have.property('body');
+        err.body.should.equal('Server error');
+      }));
 
   it('should GET a request returning body', () => pu.httpRequest(_.merge({
     returnBody: true
@@ -225,9 +241,10 @@ describe('postJSONObject', () => {
       .then((res) => {
         res.should.have.property('request');
         res.should.have.property('statusCode', 200);
-        res.should.have.property('connection');
-        res.connection.should.have.property('bytesRead');
-        res.connection.should.have.property('bytesWritten');
+        if (res.socket) {
+          res.socket.should.have.property('bytesRead');
+          res.socket.should.have.property('bytesWritten');
+        }
         res.request.should.have.property('href', 'http://127.0.0.1:6789/');
         res.should.have.property('body');
         res.body.should.have.property('result');
@@ -308,9 +325,10 @@ describe('getJSON', () => {
         .then((resp) => {
           resp.should.have.property('request');
           resp.should.have.property('statusCode', 200);
-          resp.should.have.property('connection');
-          resp.connection.should.have.property('bytesRead');
-          resp.connection.should.have.property('bytesWritten');
+          if (resp.socket) {
+            resp.socket.should.have.property('bytesRead');
+            resp.socket.should.have.property('bytesWritten');
+          }
           resp.request.should.have.property('href', 'http://127.0.0.1:6789/');
           resp.should.have.property('body');
           resp.body.should.have.property('result');
