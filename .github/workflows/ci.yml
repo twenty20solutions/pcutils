@@ -15,7 +15,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: 052662386508.dkr.ecr.us-east-1.amazonaws.com/t20/api/ci-container:latest
+      image: softwaregeneral/rv-ci-node:2026.01.21-b177c03
 
     strategy:
       matrix:
