@@ -17,25 +17,12 @@ jobs:
     container:
       image: softwaregeneral/rv-ci-node:2026.01.21-b177c03
 
-    strategy:
-      matrix:
-        node-version: [
-        20.x
-        ]
-
     steps:
 
     - name: Checkout repository ✨
       uses: actions/checkout@v4
 
-    - name: Set up node env (1/2) 📦
-      uses: actions/setup-node@v4
-      with:
-        check-latest: true
-        node-version: ${{ matrix.node-version }}
-        registry-url: https://registry.npmjs.org
-
-    - name: Set up node env (2/2) 📦
+    - name: Read node version 📦
       id: node
       run: echo "VERSION=$(node -p process.versions.modules)" >> "$GITHUB_OUTPUT"
 
